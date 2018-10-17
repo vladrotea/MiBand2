@@ -3,7 +3,7 @@ import time
 import logging
 from datetime import datetime
 from Crypto.Cipher import AES
-from Queue import Queue, Empty
+import queue as queue
 from bluepy.btle import Peripheral, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
 
@@ -77,7 +77,7 @@ class MiBand2(Peripheral):
         self.timeout = timeout
         self.mac_address = mac_address
         self.state = None
-        self.queue = Queue()
+        self.queue = queue.Queue()
         self.heart_measure_callback = None
         self.heart_raw_callback = None
         self.accel_raw_callback = None
@@ -206,7 +206,7 @@ class MiBand2(Peripheral):
                     self.heart_raw_callback(self._parse_raw_heart(res[1]))
                 elif self.accel_raw_callback and _type == QUEUE_TYPES.RAW_ACCEL:
                     self.accel_raw_callback(self._parse_raw_accel(res[1]))
-            except Empty:
+            except queue.Empty:
                 break
 
     # API ####################################################################
