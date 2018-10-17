@@ -7,7 +7,7 @@ import queue as queue
 from bluepy.btle import Peripheral, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
 
-from constants import UUIDS, AUTH_STATES, ALERT_TYPES, QUEUE_TYPES
+from .constants import UUIDS, AUTH_STATES, ALERT_TYPES, QUEUE_TYPES
 
 
 class AuthenticationDelegate(DefaultDelegate):
@@ -231,5 +231,5 @@ class MiBand2(Peripheral):
                 t = time.time()
         self.disconnect()
 
-    def stop_heart_rate_realtime(self, sig, frame):
+    def stop_heart_rate_realtime(self, sig=None, frame=None):
         self._terminate = True
