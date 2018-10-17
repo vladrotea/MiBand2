@@ -1,5 +1,6 @@
 import sys
 import time
+import signal
 from base import MiBand2
 
 MAC = sys.argv[1]
@@ -21,14 +22,5 @@ time.sleep(8)
 def l(x):
     print('Realtime heart:', x)
 
-
-def b(x):
-    print('Raw heart:', x)
-
-
-def f(x):
-    print('Raw accel heart:', x)
-
-# band.start_heart_rate_realtime(heart_measure_callback=l)
-band.start_raw_data_realtime(heart_measure_callback=l, heart_raw_callback=b, accel_raw_callback=f)
-band.disconnect()
+signal.signal(signal.SIGINT, band.stop_heart_rate_realtime)
+band.start_heart_rate_realtime(heart_measure_callback=l)
